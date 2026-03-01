@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -21,7 +21,7 @@
                     colors: {
                         revBg: '#0e0d0b',
                         revBgLighter: '#1a1815',
-                        revText: '#dfdcd5',
+                        revOffWhite: '#fdfbf2',
                         revMuted: '#8b8782',
                         revOrange: '#d36b32',
                         revLine: '#ffffff20'
@@ -31,6 +31,65 @@
         }
     </script>
     <style>
+
+        /* EXACT ORIGINAL LIST STYLING */
+        .news-right-con-list {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0; /* Exact original spacing */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .news-right-con-list-left {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .news-right-con-list-left-icon {
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Original Type: 14px, #d36b32 */
+        .news-right-con-list-left-type {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 14px;
+            color: #d36b32;
+            width: 80px; 
+            flex-shrink: 0;
+            letter-spacing: 1px;
+        }
+
+        /* Original Title: 16px, rgb(187, 168, 147) */
+        .news-right-con-list-left-title {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 16px;
+            color: rgb(187, 168, 147);
+            transition: color 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Native CSS truncation */
+        }
+
+        .news-right-con-list:hover .news-right-con-list-left-title {
+            color: #d36b32;
+        }
+
+        /* Original Date: 14px, Muted */
+        .news-right-con-list-left-time {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
         body, html { 
             color: #dfdcd5; 
             overflow: hidden; height: 100vh; width: 100vw;
@@ -39,43 +98,47 @@
             background-color: transparent; 
         }
 
-        /* --------------------------------------------------- */
-        /* EXACT BACKGROUND LOGIC - 10px blur, NO overlays     */
-        /* --------------------------------------------------- */
         #dynamic-bg {
             transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform;
         }
-        .bg-noise { position: fixed; inset: 0; opacity: 0.035; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
 
-        /* Custom Geometric & UI Decals */
-        .corner-cut-image { border-top-right-radius: 60px; border-bottom-left-radius: 20px; }
-        .circle-btn { border: 1px solid var(--revLine); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-        .circle-btn:hover { border-color: var(--revOrange); color: var(--revOrange); }
-        .floating-circle { border-radius: 50%; padding: 6px; border: 1px solid var(--revLine); background: var(--revBgLighter); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
+        .one-corner-rounded { 
+            border-top-right-radius: 80px; 
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            border-top-left-radius: 8px;
+        }
         
-        /* The Blur Fade Points for Typography */
-        .text-glow-point { position: absolute; border-radius: 50%; filter: blur(35px); mix-blend-mode: screen; pointer-events: none; z-index: -1; }
+        .text-partial-blur { 
+            filter: blur(0.5px); 
+            opacity: 0.95; 
+            display: inline-block; 
+            pointer-events: none; 
+            text-shadow: 0 0 1px rgba(253, 251, 242, 0.3);
+        }
         
-        /* Geometric spinning rings behind images */
+        .title-fade {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            mask-image: linear-gradient(to right, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+        }
+
         .geo-ring { border: 1px solid var(--revLine); border-radius: 50%; position: absolute; pointer-events: none; }
         @keyframes spin-slow { 100% { transform: rotate(360deg); } }
         @keyframes spin-slow-reverse { 100% { transform: rotate(-360deg); } }
-        .animate-spin-slow { animation: spin-slow 20s linear infinite; }
-        .animate-spin-reverse { animation: spin-slow-reverse 25s linear infinite; }
-
-        /* Floating Animations */
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
-        .animate-float { animation: float 7s ease-in-out infinite; }
-        .animate-float-delayed { animation: float 8s ease-in-out 3s infinite; }
+        .animate-spin-slow { animation: spin-slow 30s linear infinite; }
+        .animate-spin-reverse { animation: spin-slow-reverse 40s linear infinite; }
 
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
         .screen-section { opacity: 0; visibility: hidden; position: absolute; inset: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
         
-        .text-shadow-custom { text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
-        .text-shadow-glow { text-shadow: 0 0 15px rgba(211,107,50,0.6); }
+        .text-shadow-custom { text-shadow: 0 4px 15px rgba(0,0,0,0.9); }
+        .text-shadow-glow { text-shadow: 0 0 15px rgba(211,107,50,0.5); }
     </style>
 </head>
 <body>
@@ -83,225 +146,134 @@
     <div class="fixed inset-0 z-[-10] overflow-hidden pointer-events-none">
         <div id="dynamic-bg" class="absolute inset-[-5%] w-[110%] h-[110%]">
             <img src="https://raw.githubusercontent.com/Calyndrae/calyndrae.github.io/main/resources/background.png" 
-                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop'; console.error('BG path error');" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop';" 
                  alt="Background" 
-                 class="w-full h-full object-cover blur-[10px] opacity-100">
+                 class="w-full h-full object-cover opacity-100">
         </div>
-        <div class="bg-noise absolute inset-0 z-20"></div>
     </div>
 
-    <div class="fixed inset-0 z-[-5] pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 33vw 33vh; background-position: center center;"></div>
-    
-    <nav class="fixed top-0 w-full z-50 px-12 py-8 flex justify-between items-center bg-gradient-to-b from-black/20 to-transparent pointer-events-none">
+    <nav class="fixed top-0 w-full z-50 px-12 py-8 flex justify-between items-center bg-gradient-to-b from-black/30 to-transparent pointer-events-none">
         <div class="flex items-center space-x-16 pointer-events-auto">
-            <a href="index.html" class="text-3xl font-serif tracking-[0.15em] text-white flex items-center text-shadow-custom hover:text-revOrange transition-colors">
+            <a href="https://calyndrae.github.io/index.html" class="text-4xl font-serif tracking-[0.15em] text-revOffWhite flex items-center text-shadow-custom hover:text-revOrange transition-colors">
                 JD<span class="text-revOrange ml-1">.</span>
             </a>
-            <div class="hidden lg:flex space-x-12 text-[14px] font-serif italic tracking-[0.15em] text-revMuted">
-                <a href="index.html" class="text-white border-b border-revOrange pb-1">Home</a>
-                <a href="about.html" class="hover:text-white transition-colors">About</a>
-                <a href="projects.html" class="hover:text-white transition-colors">Architecture</a>
-                <a href="posts.html" class="hover:text-white transition-colors">Visuals</a>
+            <div class="hidden lg:flex space-x-12 text-[15px] font-serif tracking-[0.2em] text-revMuted uppercase">
+                <a href="https://calyndrae.github.io/index.html" class="text-revOffWhite border-b border-revOrange pb-1">MAIN PAGE</a>
+                <a href="https://calyndrae.github.io/projects.html" class="hover:text-revOffWhite transition-colors text-shadow-custom">PROJECTS</a>
+                <a href="https://calyndrae.github.io/moreposts.html" class="hover:text-revOffWhite transition-colors text-shadow-custom">POSTS</a>
+                <a href="https://calyndrae.github.io/gallery.html" class="hover:text-revOffWhite transition-colors text-shadow-custom">GALLERY</a>
             </div>
         </div>
         
         <div class="flex items-center space-x-6 pointer-events-auto">
-            <button class="text-revMuted hover:text-white transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20"></path></svg>
-            </button>
-            <a href="contact.html" class="text-revOrange hover:text-white transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 2L2 12l10 10 10-10L12 2z"></path><circle cx="12" cy="12" r="3" fill="currentColor"></circle></svg>
+            <a href="https://calyndrae.github.io/contact.html" class="text-revOrange hover:text-revOffWhite transition-colors flex items-center space-x-2 text-[14px] font-sans tracking-[0.2em] uppercase text-shadow-custom">
+                <span>GET IN TOUCH</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
             </a>
         </div>
     </nav>
 
-    <footer class="fixed bottom-0 w-full px-12 py-5 border-t border-revLine/50 flex justify-between items-center text-[11px] font-serif tracking-[0.2em] text-revMuted uppercase z-50 bg-black/10 backdrop-blur-sm pointer-events-none">
+    <footer class="fixed bottom-0 w-full px-12 py-6 flex justify-between items-center text-[12px] font-serif tracking-[0.2em] text-revMuted uppercase z-50 pointer-events-none">
         <div class="flex items-center space-x-6">
-            <span class="text-revOrange font-bold tracking-[0.3em]">JD PORTFOLIO</span>
+            <span class="text-revOrange font-bold tracking-[0.3em] text-shadow-custom">JD PORTFOLIO</span>
             <div class="flex items-center space-x-2">
                 <div class="w-1.5 h-1.5 rotate-45 border border-revOrange"></div>
-                <span>Est. 2021</span>
+                <span class="text-shadow-custom">EST. 2021</span>
             </div>
         </div>
         <div class="flex items-center space-x-12">
             <div class="flex items-center space-x-3">
-                <div class="w-1.5 h-1.5 rotate-45 border border-revOrange bg-revOrange"></div>
-                <span>NODE 01</span>
+                <div class="w-1.5 h-1.5 rotate-45 border border-revOrange bg-revOrange shadow-[0_0_10px_#d36b32]"></div>
+                <span class="text-shadow-custom text-revOffWhite">NODE 01</span>
             </div>
-            <span class="tracking-[0.3em]">THE SYNTHESIS IS COMING</span>
+            <span class="tracking-[0.3em] text-shadow-custom">THE SYNTHESIS IS COMING</span>
         </div>
     </footer>
 
     <main id="fullpage-wrapper" class="relative w-full h-full z-10">
 
-        <section class="screen-section px-12">
-            <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                
-                <div class="lg:col-span-7 relative">
-                    <div class="absolute -top-10 -left-10 w-64 h-64 geo-ring border-revLine/40 animate-spin-slow z-[-1]">
-                        <div class="w-2 h-2 bg-revOrange rounded-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
-                    </div>
-                    <svg class="absolute -bottom-12 -right-8 w-40 h-40 text-revLine/40 rotate-[15deg] z-[-1]" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.5">
-                        <polygon points="50,5 95,95 5,95" />
-                        <circle cx="50" cy="65" r="20" />
-                    </svg>
+        <section class="screen-section">
+            <div class="relative w-full h-full flex flex-col items-center justify-center text-center px-10">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] geo-ring border-revLine/30 animate-spin-slow z-[-1]"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] geo-ring border-revOrange/10 animate-spin-reverse z-[-1]"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-px bg-revLine/20 z-[-1]"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[800px] w-px bg-revLine/20 z-[-1]"></div>
 
-                    <div class="w-full h-[550px] bg-black border border-revLine corner-cut-image overflow-hidden relative shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] backdrop-blur-md">
-                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=crop" alt="Hero" class="w-full h-full object-cover opacity-90">
-                        <div class="absolute bottom-6 right-6 text-revOrange/80">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1"><path d="M12 2v20M2 12h20M15.5 8.5l-7 7M8.5 8.5l7 7"></path></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-5 flex flex-col justify-center pl-8 relative">
-                    
-                    <div class="text-glow-point w-40 h-40 bg-revOrange/30 top-0 left-10"></div>
-                    <div class="text-glow-point w-32 h-32 bg-white/10 bottom-20 right-0"></div>
-
-                    <h1 class="font-serif text-white mb-8 text-shadow-custom flex flex-col relative z-10">
-                        <div class="flex items-baseline space-x-4">
-                            <span class="text-[5rem] leading-none text-shadow-glow">2026</span>
-                            <span class="text-2xl tracking-[0.2em] font-serif uppercase text-revText mb-2 italic">The</span>
-                        </div>
-                        <span class="text-[4.2rem] italic text-revText leading-[0.9] mt-2 border-b border-revLine/50 pb-4 inline-block w-max">CREATIVE SYNTHESIS</span>
+                <div class="relative z-10 flex flex-col items-center">
+                    <h1 class="text-[6rem] md:text-[8rem] font-serif text-revOffWhite mb-4 leading-none tracking-widest text-shadow-glow flex items-center justify-center relative">
+                        JD
                     </h1>
                     
-                    <div class="space-y-6 text-revText/90 font-serif text-[17px] leading-[1.8] max-w-md drop-shadow-md">
-                        <p>Bridging the gap between pure artistic expression and uncompromising technical execution.</p>
-                        <p>Leveraging 5 years of mastery in Game Illustrations and UI design, seamlessly fused with full-stack scripting, 1.21 Datapack engineering, and rigorous Tier 4 PVP mechanics.</p>
-                        <p class="text-revOrange italic text-[15px]">Art provides the vision. Logic constructs the reality.</p>
+                    <div class="flex items-center space-x-6 mb-12">
+                        <div class="w-16 h-px bg-revOrange"></div>
+                        <span class="text-revOrange font-serif italic text-2xl tracking-[0.4em] uppercase text-shadow-custom">Architect & Artist</span>
+                        <div class="w-16 h-px bg-revOrange"></div>
                     </div>
-
-                    <div class="flex items-center space-x-6 mt-12 text-sm font-serif text-revMuted">
-                        <button class="w-8 h-8 circle-btn"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
-                        <div class="flex items-center space-x-5 relative">
-                            <div class="relative flex flex-col items-center text-revOrange">
-                                <div class="w-1.5 h-1.5 rounded-full bg-revOrange absolute -top-3 shadow-[0_0_8px_#d36b32]"></div>
-                                <span>I</span>
-                            </div>
-                            <span class="hover:text-white cursor-pointer transition-colors">II</span>
-                            <span class="hover:text-white cursor-pointer transition-colors">III</span>
-                        </div>
-                        <button class="w-8 h-8 circle-btn"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    
+                    <div class="space-y-8 text-revOffWhite font-serif text-[22px] leading-[2] max-w-3xl text-shadow-custom tracking-wide relative">
+                        <p>I am an illustrator with 5 years of experience, fo<span class="text-partial-blur">cus</span>ed on Game illustrations, Anime, sketches, and UI design.</p>
+                        <p>I am also a scrip<span class="text-partial-blur">ter</span> and game developer. Proficient in JavaScript, React, and full-stack architectures. I engineer in<span class="text-partial-blur">tri</span>cate Minecraft datapacks and command Tier 4 PVP combat, preparing for Tier 2/3.</p>
+                        <p class="text-revOrange italic text-[18px] tracking-widest mt-8">Lo<span class="text-partial-blur">gic</span> dictates the foundation. Art breathes the soul.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="screen-section px-12">
-            <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+            <div class="max-w-[1400px] mx-auto w-full flex flex-col lg:flex-row justify-center items-center gap-[4%] -translate-y-12">
                 
-                <div class="lg:col-span-5 flex flex-col relative group cursor-pointer">
-                    <div class="absolute -bottom-6 -left-6 w-32 h-32 geo-ring border-revOrange/30 animate-spin-reverse z-[-1]"></div>
-                    
-                    <div class="w-full h-[450px] border border-revLine overflow-hidden relative shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] backdrop-blur-md">
-                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop" alt="Featured Project" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                        <div class="absolute bottom-10 right-8 text-right">
-                            <h3 class="font-serif text-[2.5rem] leading-[1] text-white mb-2 text-shadow-custom">COMPONENT<br><span class="italic font-bold text-[3.5rem] text-revOrange">DATAPACKS</span></h3>
-                            <p class="font-serif italic text-[14px] text-white tracking-widest mt-3 drop-shadow">Review the latest 1.21 syntax architectures</p>
+                <div class="w-full lg:w-[52%] flex flex-col relative group">
+                    <div id="slider-container" class="w-full aspect-[16/10] relative border border-revLine/40 one-corner-rounded overflow-hidden shadow-[0_20px_50px_-10px_rgba(0,0,0,0.8)]">
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                            <span class="text-revOrange font-mono text-xs tracking-widest animate-pulse">READING VISUAL DATA...</span>
                         </div>
                     </div>
-                    <div class="flex space-x-3 mt-6 ml-2">
-                        <div class="w-2.5 h-2.5 rotate-45 bg-revOrange shadow-[0_0_10px_rgba(211,107,50,0.8)]"></div>
-                        <div class="w-2.5 h-2.5 rotate-45 bg-revOrange/50"></div>
-                        <div class="w-2.5 h-2.5 rotate-45 bg-revOrange/20"></div>
+                    
+                    <div id="slider-stars" class="flex justify-start items-center space-x-3 mt-5 ml-4">
                     </div>
                 </div>
 
-                <div class="lg:col-span-7 flex flex-col pt-4 relative">
-                    <div class="text-glow-point w-48 h-20 bg-revOrange/20 top-0 left-0"></div>
+                <div class="w-full lg:w-[40%] flex flex-col relative pt-2">
 
-                    <div class="flex items-end mb-8 pb-4 border-b border-revLine/50">
-                        <h2 class="font-serif text-[3.5rem] leading-[0.8] text-white mr-10 text-shadow-custom flex items-end">
-                            <span class="text-[6rem] font-bold text-shadow-glow">I</span>NDEX
-                        </h2>
+                    <div class="news-right-head flex justify-between items-end mb-[20px] relative w-full">
+                        <div class="absolute -top-16 -left-12 z-[-1] opacity-40 pointer-events-none">
+                            <svg class="w-48 h-48 animate-spin-slow text-revLine/40" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.5">
+                                <circle cx="50" cy="50" r="45" stroke-dasharray="2 6" />
+                                <ellipse cx="50" cy="50" rx="40" ry="10" transform="rotate(30 50 50)" />
+                                <ellipse cx="50" cy="50" rx="40" ry="10" transform="rotate(-30 50 50)" />
+                            </svg>
+                        </div>
+
+                        <div class="news-right-head-img">
+                            <h2 class="font-serif text-revOffWhite text-shadow-custom flex items-baseline leading-none m-0">
+                                <span class="text-[6.5rem] leading-[0.75] font-normal drop-shadow-md">P</span>
+                                <span class="text-[2.5rem] leading-none">OSTS</span>
+                            </h2>
+                        </div>
                         
-                        <div class="flex space-x-2 text-[12px] font-serif tracking-[0.15em] text-revMuted border border-revLine/60 rounded-full p-1.5 bg-black/30 backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.05)]" id="filter-tabs">
-                            <span class="cursor-pointer text-revOrange transition-all px-6 py-2 rounded-full bg-white/10 border border-revOrange/40 shadow-[0_0_10px_rgba(211,107,50,0.2)]" data-cat="LATEST">LATEST</span>
-                            <span class="cursor-pointer hover:text-revOrange transition-all px-6 py-2 rounded-full border border-transparent hover:border-revLine/50" data-cat="SYSTEMS">SYSTEMS</span>
-                            <span class="cursor-pointer hover:text-revOrange transition-all px-6 py-2 rounded-full border border-transparent hover:border-revLine/50" data-cat="VISUALS">VISUALS</span>
-                            <span class="cursor-pointer hover:text-revOrange transition-all px-6 py-2 rounded-full border border-transparent hover:border-revLine/50" data-cat="COMBAT">COMBAT</span>
+                        <div class="news-right-head-bg flex items-center space-x-6 border rounded-[30px] px-6 py-1.5" id="filter-tabs" style="border-color: rgba(255,255,255,0.2); background: transparent;">
+                            <div class="news-right-head-bg-list cursor-pointer text-[#d36b32] border-b border-[#d36b32] pb-0.5 text-[14px] font-serif tracking-widest" data-cat="LATEST">LATEST</div>
+                            <div class="news-right-head-bg-list cursor-pointer text-[#fdfbf2] hover:text-[#d36b32] border-b border-transparent pb-0.5 text-[14px] font-serif tracking-widest" data-cat="SCRIPTS">SCRIPTS</div>
+                            <div class="news-right-head-bg-list cursor-pointer text-[#fdfbf2] hover:text-[#d36b32] border-b border-transparent pb-0.5 text-[14px] font-serif tracking-widest" data-cat="ARTS">ARTS</div>
+                            <div class="news-right-head-bg-list cursor-pointer text-[#fdfbf2] hover:text-[#d36b32] border-b border-transparent pb-0.5 text-[14px] font-serif tracking-widest" data-cat="OTHERS">OTHERS</div>
                         </div>
                     </div>
 
-                    <div id="records-container" class="can-scroll space-y-0 max-h-[40vh] overflow-y-auto hide-scroll text-shadow-custom px-2">
-                        <div class="py-10 text-revOrange font-serif italic text-lg tracking-widest animate-pulse">[ FETCHING SECURE ARCHIVES... ]</div>
+                    <div id="records-container" class="news-right-con w-full text-shadow-custom">
+                        <div class="py-10 text-revOrange font-serif italic text-lg tracking-widest animate-pulse">[ INITIATING FETCH PROTOCOL... ]</div>
                     </div>
                     
-                    <div class="pt-8">
-                        <button id="btn-more-records" class="hidden border border-revLine rounded-full px-10 py-3 text-[13px] font-serif tracking-[0.2em] text-white hover:border-revOrange hover:text-revOrange transition-colors bg-black/40 backdrop-blur-md shadow-[0_4px_15px_rgba(0,0,0,0.5)]">
-                            Access More <span class="font-serif italic text-revOrange ml-2 text-lg leading-none">&gt;</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="screen-section relative max-w-[1600px] mx-auto px-10">
-            <div class="text-glow-point w-40 h-40 bg-white/10 top-[15%] left-[18%]"></div>
-            <div class="text-glow-point w-40 h-40 bg-revOrange/20 bottom-[10%] left-[45%]"></div>
-            <div class="text-glow-point w-40 h-40 bg-blue-500/10 top-[20%] right-[22%]"></div>
-
-            <div class="absolute top-[30%] left-[45%] text-[10px] font-serif tracking-[0.25em] uppercase text-revMuted text-right leading-relaxed opacity-80 drop-shadow-md">
-                <p>LOGIC DICTATES THE FOUNDATION.</p>
-                <p>ART BREATHES THE SOUL.</p>
-                <p class="italic mt-1 text-revOrange">A FLAWLESS EXECUTION.</p>
-            </div>
-            
-            <div class="absolute bottom-[35%] right-[15%] text-[10px] font-serif tracking-[0.25em] uppercase text-revMuted leading-relaxed opacity-80 max-w-[250px] drop-shadow-md">
-                <p>ENGINEERING IMMERSIVE EXPERIENCES THROUGH PRECISION SCRIPTING AND AESTHETIC MASTERY.</p>
-            </div>
-
-            <div class="absolute top-[12%] left-[18%] group cursor-pointer animate-float z-20">
-                <div class="relative">
-                    <svg class="absolute -inset-4 w-[calc(100%+32px)] h-[calc(100%+32px)] animate-spin-slow text-revLine/50 pointer-events-none" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4"/>
-                        <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="0.2"/>
-                    </svg>
-
-                    <div class="floating-circle w-[320px] h-[320px] overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=800&auto=format&fit=crop" alt="Illustration" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
-                    </div>
-                    <div class="absolute -bottom-4 right-4 w-24 h-16 bg-black border border-revLine rotate-12 shadow-xl z-30 flex items-center justify-center text-[10px] font-serif italic text-revOrange">CANVAS_01</div>
-                </div>
-                <h3 class="absolute -bottom-8 left-1/2 -translate-x-1/2 font-serif text-[3.5rem] text-white font-bold text-shadow-custom z-40 whitespace-nowrap drop-shadow-xl">
-                    <span class="text-revOrange text-3xl align-middle mr-2 font-normal">✦</span>VISUAL ARTS
-                </h3>
-            </div>
-
-            <div class="absolute top-[20%] right-[22%] group cursor-pointer animate-float-delayed z-10">
-                <div class="relative image-bracket-container">
-                    <div class="w-[380px] h-[220px] bg-black border border-revLine overflow-hidden shadow-2xl relative">
-                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="Scripting" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700 filter grayscale">
-                    </div>
-                    <div class="absolute -right-6 top-12 w-20 h-24 bg-black border border-revLine rotate-[15deg] shadow-lg flex items-center justify-center overflow-hidden z-20">
-                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=200&auto=format&fit=crop" class="opacity-50">
-                    </div>
-                    <div class="absolute -right-12 top-10 w-20 h-24 bg-black border border-revLine rotate-6 shadow-lg z-10"></div>
-                </div>
-                <h3 class="absolute -bottom-12 -left-16 font-serif text-[3.5rem] text-white font-bold text-shadow-custom z-40 whitespace-nowrap drop-shadow-xl">
-                    <span class="text-revOrange text-3xl align-middle mr-2 font-normal">✦</span>SYSTEMS & CODE
-                </h3>
-            </div>
-
-            <div class="absolute bottom-[10%] left-[45%] -translate-x-1/2 group cursor-pointer animate-float z-30">
-                <div class="relative">
-                    <div class="w-[280px] h-[280px] border border-revLine overflow-hidden shadow-2xl relative bg-black">
-                        <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=800&auto=format&fit=crop" alt="Game Dev" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500">
-                    </div>
-                    <div class="absolute top-1/2 -translate-y-1/2 -right-[120px] w-[240px] h-[240px] rounded-full border border-revLine/30 bg-black/90 shadow-[0_0_30px_rgba(0,0,0,0.9)] flex items-center justify-center group-hover:rotate-180 transition-transform duration-[1.5s] z-[-1]">
-                        <div class="w-20 h-20 rounded-full border border-revLine/50 bg-[#1a1a1a] flex items-center justify-center relative">
-                            <svg class="absolute inset-0 w-full h-full text-revLine/40" viewBox="0 0 100 100"><polygon points="50,10 90,50 50,90 10,50" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-                            <div class="w-3 h-3 rotate-45 bg-revOrange shadow-[0_0_10px_rgba(211,107,50,1)]"></div>
+                    <div class="news-right-foot mt-8" style="display: block;">
+                        <div class="news-right-foot-button relative flex items-center justify-center border border-[#d36b32] rounded-[20px] w-[140px] h-[38px] text-[#d36b32] font-serif text-[18px] cursor-pointer hover:bg-[#d36b32]/10 transition-colors" onclick="window.location.href='https://calyndrae.github.io/moreposts.html'">
+                            More
+                            <div class="absolute -right-[35px] flex items-center">
+                                <div class="w-[45px] h-[1px] bg-[#d36b32]"></div>
+                                <svg class="w-3 h-3 text-[#d36b32] -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
                         </div>
                     </div>
+
                 </div>
-                <h3 class="absolute -bottom-10 -left-12 font-serif text-[4rem] text-white font-bold text-shadow-custom z-40 whitespace-nowrap drop-shadow-xl">
-                    <span class="text-revOrange text-3xl align-middle mr-2 font-normal">✦</span>DATAPACKS
-                </h3>
             </div>
         </section>
 
@@ -309,23 +281,20 @@
 
     <div class="fixed right-10 top-1/2 -translate-y-1/2 flex flex-col space-y-4 z-50">
         <button class="nav-dot w-2 h-2 rotate-45 bg-revOrange ring-4 ring-revOrange/20 shadow-[0_0_15px_rgba(211,107,50,0.8)] transition-all"></button>
-        <button class="nav-dot w-2 h-2 rotate-45 bg-revLine hover:bg-white transition-colors shadow-lg"></button>
-        <button class="nav-dot w-2 h-2 rotate-45 bg-revLine hover:bg-white transition-colors shadow-lg"></button>
+        <button class="nav-dot w-2 h-2 rotate-45 bg-revLine hover:bg-revOffWhite transition-colors shadow-lg"></button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
-        // 1. Client-side lock
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('dragstart', event => event.preventDefault());
 
-        // 2. High-speed Snap Scrolling Engine (0.45s)
         const sections = document.querySelectorAll('.screen-section');
         const navDots = document.querySelectorAll('.nav-dot');
         let currentSection = 0;
         let isAnimating = false;
 
-        gsap.set(sections, { autoAlpha: 0, y: 80 });
+        gsap.set(sections, { autoAlpha: 0, y: 50 });
         gsap.set(sections[0], { autoAlpha: 1, y: 0 });
 
         function updateDots(index) {
@@ -333,7 +302,7 @@
                 if (i === index) {
                     dot.className = "nav-dot w-2 h-2 rotate-45 bg-revOrange ring-4 ring-revOrange/20 shadow-[0_0_15px_rgba(211,107,50,0.8)] transition-all";
                 } else {
-                    dot.className = "nav-dot w-2 h-2 rotate-45 bg-revLine hover:bg-white transition-colors shadow-lg";
+                    dot.className = "nav-dot w-2 h-2 rotate-45 bg-revLine hover:bg-revOffWhite transition-colors shadow-lg";
                 }
             });
         }
@@ -345,13 +314,13 @@
             const current = sections[currentSection];
             const next = sections[index];
 
-            const yExit = direction === 1 ? -80 : 80;
-            const yEnter = direction === 1 ? 80 : -80;
+            const yExit = direction === 1 ? -40 : 40;
+            const yEnter = direction === 1 ? 40 : -40;
 
-            gsap.to(current, { y: yExit, autoAlpha: 0, duration: 0.45, ease: "power3.inOut" });
+            gsap.to(current, { y: yExit, autoAlpha: 0, duration: 0.35, ease: "power2.inOut" });
             gsap.fromTo(next, 
-                { y: yEnter, autoAlpha: 0 },
-                { y: 0, autoAlpha: 1, duration: 0.45, ease: "power3.inOut", onComplete: () => {
+                { y: yEnter, autoAlpha: 0, scale: 0.98 },
+                { y: 0, autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.2)", onComplete: () => {
                     currentSection = index; updateDots(currentSection); isAnimating = false;
                 }}
             );
@@ -359,112 +328,166 @@
 
         window.addEventListener('wheel', (e) => {
             if (isAnimating) return;
-            const scrollable = e.target.closest('.can-scroll');
-            if (scrollable && scrollable.scrollHeight > scrollable.clientHeight) {
-                const isAtTop = scrollable.scrollTop === 0;
-                const isAtBottom = scrollable.scrollTop + scrollable.clientHeight >= scrollable.scrollHeight - 1;
-                if (e.deltaY > 0 && !isAtBottom) return; 
-                if (e.deltaY < 0 && !isAtTop) return;    
-            }
             if (e.deltaY > 40) gotoSection(currentSection + 1, 1);
             else if (e.deltaY < -40) gotoSection(currentSection - 1, -1);
         }, { passive: false });
 
-        // 3. Dynamic Data Engine (Portfolio Oriented)
-        const DB_URL = "https://raw.githubusercontent.com/Calyndrae/calyndrae.github.io/main/records/records.txt";
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                if (index > currentSection) gotoSection(index, 1);
+                else if (index < currentSection) gotoSection(index, -1);
+            });
+        });
+
+        const BASE_URL = "https://raw.githubusercontent.com/Calyndrae/calyndrae.github.io/main/posts/";
+        const FETCH_TARGETS = [
+            { file: "scripts.txt", cat: "SCRIPTS" },
+            { file: "arts.txt", cat: "ARTS" },
+            { file: "others.txt", cat: "OTHERS" }
+        ];
+        
         let allRecords = [];
         let currentCategory = 'LATEST';
-        let currentLimit = 4; // Show 4 by default
+        let slideInterval = null; 
 
-        // Fallback data customized for portfolio
-        const FALLBACK_DATA = `
-** Architected 1.21 Component Datapack **\nCategory: SYSTEMS\nDate: 2026-03-01\nLink: projects.html
-** Achieved Tier 4 PVP Milestone **\nCategory: COMBAT\nDate: 2026-02-28\nLink: posts.html
-** Cyber-Synth UI Concept Design **\nCategory: VISUALS\nDate: 2026-02-15\nLink: projects.html
-** Advanced React.js Frontend Portal **\nCategory: SYSTEMS\nDate: 2026-01-20\nLink: projects.html
-** Early Game Anime Illustrations **\nCategory: VISUALS\nDate: 2025-12-11\nLink: projects.html
-        `;
-
-        async function initDynamicRecords() {
-            try {
-                const res = await fetch(`${DB_URL}?t=${new Date().getTime()}`);
-                if (!res.ok) throw new Error();
-                const text = await res.text();
-                parseRecords(text.length < 10 ? FALLBACK_DATA : text);
-            } catch(e) { parseRecords(FALLBACK_DATA); }
+        function parseTextData(text, category) {
+            const blocks = text.split(/title:\s*/i).filter(b => b.trim().length > 0);
+            
+            blocks.forEach(block => {
+                const lines = block.split('\n');
+                let title = lines[0].trim();
+                let dateStr = "";
+                let linkStr = "#";
+                let picStr = ""; 
+                
+                lines.forEach(line => {
+                    let l = line.trim().toLowerCase();
+                    if(l.startsWith('date:')) dateStr = line.substring(5).trim();
+                    if(l.startsWith('links:')) linkStr = line.substring(6).trim();
+                    if(l.startsWith('picture:')) picStr = line.substring(8).trim();
+                });
+                
+                let ts = new Date(dateStr).getTime() || 0;
+                allRecords.push({ title, cat: category, date: dateStr, link: linkStr, pic: picStr, ts });
+            });
         }
 
-        function parseRecords(rawText) {
-            const parts = rawText.split('**').map(s => s.trim()).filter(s => s.length > 0);
-            for(let i = 0; i < parts.length; i += 2) {
-                const title = parts[i];
-                const body = parts[i+1] || "";
-                const cat = (body.match(/Category:\s*(.*?)(?=\n|$)/i) || ["",""])[1].trim().toUpperCase() || "LATEST";
-                const date = (body.match(/Date:\s*(.*?)(?=\n|$)/i) || ["",""])[1].trim();
-                const link = (body.match(/Link:\s*(.*)/i) || ["",""])[1].trim() || "#";
-                allRecords.push({ title, cat, date, link });
+        async function initDynamicRecords() {
+            let fetchPromises = FETCH_TARGETS.map(target => 
+                fetch(`${BASE_URL}${target.file}?t=${new Date().getTime()}`)
+                .then(res => {
+                    if (res.ok) return res.text();
+                    throw new Error("File not found");
+                })
+                .then(text => parseTextData(text, target.cat))
+                .catch(err => console.log(`No data for ${target.cat} yet.`))
+            );
+
+            await Promise.all(fetchPromises);
+
+            if(allRecords.length === 0) {
+                allRecords = [
+                    { title: "Database initialization in progress...", cat: "OTHERS", date: "2026-03-01", link: "#", pic: "", ts: 1 }
+                ];
             }
+            
+            renderSlider();
             renderRecords();
+        }
+
+        function renderSlider() {
+            const container = document.getElementById('slider-container');
+            const starsContainer = document.getElementById('slider-stars');
+            if (!container || !starsContainer) return;
+
+            let top3 = [...allRecords].sort((a, b) => b.ts - a.ts).slice(0, 3);
+            const defaultPic = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop";
+
+            let imgHtml = '';
+            let starHtml = '';
+            
+            top3.forEach((r, i) => {
+                let pic = (r.pic && r.pic !== "nah" && r.pic !== "") ? r.pic : defaultPic;
+                
+                let activeClass = i === 0 ? "opacity-100 z-20" : "opacity-0 z-10";
+                
+                imgHtml += `<img id="slide-img-${i}" src="${pic}" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-[2s] ease-in-out ${activeClass}">`;
+                
+                let starColor = i === 0 ? "text-revOrange fill-revOrange" : "text-revLine/50 fill-transparent";
+                starHtml += `
+                <svg id="slide-star-${i}" class="w-3.5 h-3.5 transition-colors duration-[1.5s] ${starColor}" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"></path>
+                </svg>`;
+            });
+            
+            container.innerHTML = imgHtml;
+            starsContainer.innerHTML = starHtml;
+
+            if(slideInterval) clearInterval(slideInterval);
+            let currentIdx = 0;
+            
+            if(top3.length > 1) {
+                slideInterval = setInterval(() => {
+                    let prevIdx = currentIdx;
+                    currentIdx = (currentIdx + 1) % top3.length;
+                    
+                    document.getElementById(`slide-img-${prevIdx}`).classList.replace('opacity-100', 'opacity-0');
+                    document.getElementById(`slide-img-${prevIdx}`).classList.replace('z-20', 'z-10');
+                    document.getElementById(`slide-img-${currentIdx}`).classList.replace('opacity-0', 'opacity-100');
+                    document.getElementById(`slide-img-${currentIdx}`).classList.replace('z-10', 'z-20');
+                    
+                    document.getElementById(`slide-star-${prevIdx}`).classList.replace('text-revOrange', 'text-revLine/50');
+                    document.getElementById(`slide-star-${prevIdx}`).classList.replace('fill-revOrange', 'fill-transparent');
+                    document.getElementById(`slide-star-${currentIdx}`).classList.replace('text-revLine/50', 'text-revOrange');
+                    document.getElementById(`slide-star-${currentIdx}`).classList.replace('fill-transparent', 'fill-revOrange');
+                }, 10000); 
+            }
         }
 
         function renderRecords() {
             const container = document.getElementById('records-container');
-            const btn = document.getElementById('btn-more-records');
-            
             let filtered = currentCategory === 'LATEST' ? allRecords : allRecords.filter(r => r.cat === currentCategory);
-            const toShow = filtered.slice(0, currentLimit);
+            filtered.sort((a, b) => b.ts - a.ts);
+            const toShow = filtered.slice(0, 5);
 
-            if(filtered.length === 0) {
-                container.innerHTML = `<div class="py-10 text-white text-[15px] font-serif italic text-center drop-shadow-md">No records found in this sector.</div>`;
-                btn.style.display = 'none'; return;
+            if(toShow.length === 0) {
+                container.innerHTML = `<div class="py-10 text-revOffWhite text-[15px] font-serif italic text-center drop-shadow-md">No records found.</div>`;
+                return;
             }
-
-            container.innerHTML = toShow.map((r) => `
-                <a href="${r.link}" class="group flex items-center justify-between py-5 border-b border-revLine/40 hover:bg-white/[0.03] transition-colors cursor-pointer rounded-lg px-2 -mx-2">
-                    <div class="flex items-baseline space-x-5 overflow-hidden pr-4">
-                        <span class="font-serif text-[15px] text-revOrange tracking-wider shrink-0 drop-shadow-md">${r.cat}</span>
-                        <h4 class="font-serif text-[19px] text-white group-hover:text-revOrange transition-colors truncate drop-shadow-lg">${r.title}</h4>
+            
+            container.innerHTML = toShow.map((r) => {
+                return `
+                <div class="news-right-con-list group" onclick="window.location.href='${r.link}'">
+                    <div class="news-right-con-list-left">
+                        <div class="news-right-con-list-left-icon">
+                            <svg class="w-[18px] h-[18px] text-[#8b8782] group-hover:text-[#d36b32] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-.174.552-.377 1.09-.604 1.605m-14.862 0A10.05 10.05 0 0012 19c4.478 0 8.268-2.943 9.542-7"></path></svg>
+                        </div>
+                        <div class="news-right-con-list-left-type">${r.cat}</div>
+                        <div class="news-right-con-list-left-title" title="${r.title}">${r.title}</div>
                     </div>
-                    <div class="flex items-center shrink-0 ml-4">
-                        <span class="text-[15px] font-serif italic text-revMuted drop-shadow-md">${r.date}</span>
-                        <span class="text-revOrange opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all ml-4 flex items-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </span>
-                    </div>
-                </a>
-            `).join('');
-
-            if (filtered.length <= 4) {
-                btn.style.display = 'none';
-            } else {
-                btn.style.display = 'inline-block';
-                if (currentLimit >= filtered.length) {
-                    btn.innerHTML = `Collapse <span class="font-serif italic text-revOrange ml-2 text-lg leading-none">&gt;</span>`;
-                    btn.onclick = () => { currentLimit = 4; renderRecords(); container.scrollTop = 0; };
-                } else {
-                    btn.innerHTML = `Access More <span class="font-serif italic text-revOrange ml-2 text-lg leading-none">&gt;</span>`;
-                    btn.onclick = () => { currentLimit += 4; renderRecords(); };
-                }
-            }
+                    <div class="news-right-con-list-left-time flex-end">${r.date}</div>
+                </div>
+                `;
+            }).join('');
         }
 
-        // Handle Tab Switching
         function bindTabs() {
-            const tabs = document.querySelectorAll('#filter-tabs span');
+            const tabs = document.querySelectorAll('#filter-tabs div');
             tabs.forEach(tab => {
                 tab.addEventListener('click', (e) => {
-                    // Reset all tabs to default unselected style
-                    tabs.forEach(t => t.className = "cursor-pointer hover:text-revOrange transition-all px-6 py-2 rounded-full border border-transparent hover:border-revLine/50");
-                    // Apply selected styling (Big border, background, shadow)
-                    e.target.className = "cursor-pointer text-revOrange transition-all px-6 py-2 rounded-full bg-white/10 border border-revOrange/40 shadow-[0_0_10px_rgba(211,107,50,0.2)]";
+                    tabs.forEach(t => {
+                        t.className = "news-right-head-bg-list cursor-pointer text-[#fdfbf2] hover:text-[#d36b32] border-b border-transparent pb-0.5 text-[14px] font-serif tracking-widest";
+                    });
+                    
+                    e.target.className = "news-right-head-bg-list cursor-pointer text-[#d36b32] border-b border-[#d36b32] pb-0.5 text-[14px] font-serif tracking-widest";
                     
                     currentCategory = e.target.getAttribute('data-cat');
-                    currentLimit = 4;
                     renderRecords();
                 });
             });
         }
 
+        bindTabs();
         initDynamicRecords();
     </script>
 </body>
