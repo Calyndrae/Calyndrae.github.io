@@ -1,0 +1,29 @@
+** Tier 4 Achieved — Preparing for Tier 2/3 **
+Category: DEVELOPMENT
+Date: 2026-03-01
+Link: posts.html
+
+** Published "Cyber-Synth" Concept UI & Game Sketches **
+Category: ARTWORK
+Date: 2026-02-28
+Link: projects.html
+
+** Released 1.21 Component Syntax Datapack Framework **
+Category: DEVELOPMENT
+Date: 2026-02-20
+Link: projects.html
+
+** Honkai: Star Rail Themed Terminal Re-design **
+Category: ARTWORK
+Date: 2026-01-15
+Link: posts.html
+
+** Server Defense: APT Scripting Logs **
+Category: DEVELOPMENT
+Date: 2026-01-10
+Link: posts.html
+
+** Early Game Illustration Prototypes **
+Category: ARTWORK
+Date: 2025-12-05
+Link: projects.html
