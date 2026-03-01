@@ -40,9 +40,10 @@
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 20px 40px -10px rgba(0,0,0,0.5);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Upgraded transition for hover effects to be snappier */
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .glass-card:hover { transform: translateY(-4px) translateZ(20px); background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%); border-color: rgba(255,255,255,0.15); box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 30px 50px -15px rgba(0,0,0,0.7), 0 0 20px rgba(168, 85, 247, 0.2); }
+        .glass-card:hover { transform: translateY(-6px) scale(1.01); background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%); border-color: rgba(255,255,255,0.15); box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 30px 50px -15px rgba(0,0,0,0.7), 0 0 20px rgba(168, 85, 247, 0.2); }
 
         .mock-ui-block { background: rgba(0,0,0,0.4); border: 1px solid var(--borderLight); border-radius: 12px; }
         .code-line { height: 6px; border-radius: 3px; background: var(--borderLight); margin-bottom: 8px; }
@@ -53,7 +54,7 @@
         .ring-2 { width: 320px; height: 320px; animation: spin 35s linear infinite reverse; }
         .ring-3 { width: 440px; height: 440px; animation: spin 50s linear infinite; }
         
-        .orbit-node { position: absolute; width: 44px; height: 44px; background: #1a1b23; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transform-style: preserve-3d; transition: transform 0.3s; cursor: pointer; }
+        .orbit-node { position: absolute; width: 44px; height: 44px; background: #1a1b23; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transform-style: preserve-3d; transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer; }
         .orbit-node:hover { transform: scale(1.2) translateZ(30px); border-color: var(--accentPurple); box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
         .ring-1 .orbit-node { animation: counter-spin 20s linear infinite reverse; }
         .ring-2 .orbit-node { animation: counter-spin 35s linear infinite; }
@@ -63,6 +64,9 @@
         @keyframes counter-spin { 100% { transform: rotate(360deg); } }
 
         .text-gradient { background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Pre-hide elements for GSAP to reveal, prevents FOUC (Flash of Unstyled Content) */
+        .gs-reveal { opacity: 0; visibility: hidden; }
     </style>
 </head>
 <body class="relative min-h-screen">
@@ -139,14 +143,14 @@
                         <h4 class="font-bold mb-2">零延迟判定</h4>
                         <p class="text-xs text-textMuted leading-relaxed">基于计分板状态机的非阻塞式实体检测机制。</p>
                     </div>
-                    <div class="glass-card rounded-2xl p-6 gs-reveal delay-100">
+                    <div class="glass-card rounded-2xl p-6 gs-reveal">
                         <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-4 border border-borderLight">
                             <svg class="w-5 h-5 text-accentPurple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
                         <h4 class="font-bold mb-2">自动化清理</h4>
                         <p class="text-xs text-textMuted leading-relaxed">动态标签分配实现精准的环境与掉落物垃圾回收。</p>
                     </div>
-                    <div class="glass-card rounded-2xl p-6 gs-reveal delay-200">
+                    <div class="glass-card rounded-2xl p-6 gs-reveal">
                         <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-4 border border-borderLight">
                             <svg class="w-5 h-5 text-accentPink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         </div>
@@ -215,7 +219,7 @@
                         <a href="#" class="text-[10px] uppercase tracking-widest text-white group-hover:text-accentPurple transition flex items-center">View Daemon <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></a>
                     </div>
                     
-                    <div class="glass-card rounded-xl p-5 gs-reveal delay-100 group cursor-pointer">
+                    <div class="glass-card rounded-xl p-5 gs-reveal group cursor-pointer">
                         <div class="flex items-center space-x-3 mb-3">
                             <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
@@ -245,7 +249,7 @@
                     <p class="text-textMuted text-sm leading-relaxed">深入 Windows API，利用 CreateToolhelp32Snapshot 等底层函数进行系统级进程监控与内存快照捕获。</p>
                 </div>
 
-                <div class="glass-card rounded-[2rem] p-8 gs-reveal delay-100 group cursor-default">
+                <div class="glass-card rounded-[2rem] p-8 gs-reveal group cursor-default">
                     <div class="text-accentPurple mb-6 group-hover:scale-110 transition-transform"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg></div>
                     <h3 class="text-2xl font-bold mb-3">DevOps & 自动化</h3>
                     <p class="text-textMuted text-sm leading-relaxed">在 Windows Server 环境中基于 PM2 部署高可用守护进程，管理基于 Python 编写的 DeepSeekBot 自动化服务。</p>
@@ -257,7 +261,7 @@
                     <p class="text-textMuted text-sm leading-relaxed">主导企业级网络攻击演练。编写高级持续驻留 (APT) 脚本，解析系统漏洞以构建提权与防御链路。</p>
                 </div>
 
-                <div class="glass-card rounded-[2rem] p-8 gs-reveal delay-100 group cursor-default">
+                <div class="glass-card rounded-[2rem] p-8 gs-reveal group cursor-default">
                     <div class="text-[#10B981] mb-6 group-hover:scale-110 transition-transform"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg></div>
                     <h3 class="text-2xl font-bold mb-3">沙盒底层逻辑重构</h3>
                     <p class="text-textMuted text-sm leading-relaxed">利用 1.21 组件语法，解耦复杂无条件重复执行命令块。通过独立计时器与标签实现状态机的精准运转。</p>
@@ -332,7 +336,9 @@
             </div>
         </section>
 
-    </main> <footer class="border-t border-borderLight bg-black/50 backdrop-blur-lg py-8 text-center text-xs text-textMuted">
+    </main>
+
+    <footer class="border-t border-borderLight bg-black/50 backdrop-blur-lg py-8 text-center text-xs text-textMuted">
         <p>© 2026 JD. Engineered with precision. <a href="https://github.com" class="hover:text-white ml-2 underline decoration-white/20">GitHub</a></p>
     </footer>
 
@@ -342,31 +348,39 @@
         gsap.registerPlugin(ScrollTrigger);
 
         document.addEventListener("DOMContentLoaded", () => {
-            const revealElements = document.querySelectorAll(".gs-reveal");
-            
-            revealElements.forEach((elem) => {
-                gsap.fromTo(elem, 
-                    { y: 60, opacity: 0, scale: 0.98 }, 
-                    { 
-                        y: 0, opacity: 1, scale: 1, 
-                        duration: 1.2, 
-                        ease: "power4.out",
-                        scrollTrigger: {
-                            trigger: elem,
-                            start: "top 85%", 
-                            toggleActions: "play none none reverse"
-                        }
-                    }
-                );
+            // Setup elements to be invisible before JS runs
+            gsap.set(".gs-reveal", { y: 40, opacity: 0, visibility: "visible" });
+
+            // Using ScrollTrigger.batch for a rapid-fire, snappy entrance sequence
+            ScrollTrigger.batch(".gs-reveal", {
+                onEnter: batch => {
+                    gsap.to(batch, {
+                        y: 0,
+                        opacity: 1,
+                        // Drastically reduced duration for snappiness
+                        duration: 0.6,
+                        // Stagger controls how fast they follow each other (lower is faster)
+                        stagger: 0.08,
+                        // expo.out creates a very fast start that settles sharply
+                        ease: "expo.out",
+                        overwrite: true
+                    });
+                },
+                // Trigger slightly earlier so they are animating while the user is looking
+                start: "top 90%"
             });
         });
 
+        // Fast, snappy exit animation for links
         document.querySelectorAll('a[href$=".html"]').forEach(link => {
             link.addEventListener('click', function(e) {
                 if(this.href === window.location.href) return;
                 e.preventDefault();
                 gsap.to("main", { 
-                    y: -40, opacity: 0, duration: 0.5, ease: "power3.inOut", 
+                    y: -20, 
+                    opacity: 0, 
+                    duration: 0.3, // Faster exit
+                    ease: "power2.inOut", 
                     onComplete: () => { window.location.href = this.href; } 
                 });
             });
