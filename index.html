@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -40,7 +40,7 @@
         }
 
         /* --------------------------------------------------- */
-        /* EXACT BACKGROUND LOGIC - TOUCHED NOTHING BUT BLUR   */
+        /* EXACT BACKGROUND LOGIC - 10px blur, NO overlays     */
         /* --------------------------------------------------- */
         #dynamic-bg {
             transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
@@ -48,12 +48,10 @@
         }
         .bg-noise { position: fixed; inset: 0; opacity: 0.035; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
 
-        /* Detail Recreations from Screenshots */
-        .corner-cut-image { border-top-right-radius: 80px; }
-        .tab-pill { border-radius: 9999px; border: 1px solid var(--revLine); padding: 4px 16px; }
+        /* UI Detail Recreations from Screenshots */
+        .corner-cut-image { border-top-right-radius: 60px; }
         .circle-btn { border: 1px solid var(--revLine); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
         .circle-btn:hover { border-color: var(--revOrange); color: var(--revOrange); }
-        
         .floating-circle { border-radius: 50%; padding: 6px; border: 1px solid var(--revLine); background: var(--revBgLighter); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
         
         /* Floating Animations */
@@ -75,10 +73,10 @@
 
     <div class="fixed inset-0 z-[-10] overflow-hidden pointer-events-none">
         <div id="dynamic-bg" class="absolute inset-[-5%] w-[110%] h-[110%]">
-            <img src="./resources/background.png" 
+            <img src="https://raw.githubusercontent.com/Calyndrae/calyndrae.github.io/main/resources/background.png" 
                  onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop'; console.error('BG path error');" 
                  alt="Background" 
-                 class="w-full h-full object-cover blur-[10px] opacity-100">
+                 class="w-full h-full object-cover blur-[5px] opacity-100">
         </div>
         <div class="bg-noise absolute inset-0 z-20"></div>
     </div>
@@ -88,14 +86,14 @@
 
     <nav class="fixed top-0 w-full z-50 px-12 py-8 flex justify-between items-center bg-gradient-to-b from-black/40 to-transparent pointer-events-none">
         <div class="flex items-center space-x-16 pointer-events-auto">
-            <a href="index.html" class="text-3xl font-serif tracking-[0.15em] text-white flex items-center text-shadow-custom">
+            <a href="index.html" class="text-3xl font-serif tracking-[0.15em] text-white flex items-center text-shadow-custom hover:text-revOrange transition-colors">
                 JD<span class="text-revOrange ml-1">.</span>
             </a>
             <div class="hidden lg:flex space-x-12 text-[11px] font-sans tracking-[0.25em] text-revMuted">
-                <a href="#" class="text-white border-b border-revOrange pb-1">HOME</a>
-                <a href="#" class="hover:text-white transition-colors">NEWS</a>
-                <a href="#" class="hover:text-white transition-colors">PROJECTS</a>
-                <a href="#" class="hover:text-white transition-colors">GALLERY</a>
+                <a href="index.html" class="text-white border-b border-revOrange pb-1">HOME</a>
+                <a href="about.html" class="hover:text-white transition-colors">ABOUT</a>
+                <a href="projects.html" class="hover:text-white transition-colors">PROJECTS</a>
+                <a href="posts.html" class="hover:text-white transition-colors">POSTS</a>
             </div>
         </div>
         
@@ -103,13 +101,13 @@
             <button class="text-revMuted hover:text-white transition-colors">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
             </button>
-            <button class="text-revOrange hover:text-white transition-colors">
+            <a href="contact.html" class="text-revOrange hover:text-white transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"></path></svg>
-            </button>
+            </a>
         </div>
     </nav>
 
-    <footer class="fixed bottom-0 w-full px-12 py-5 border-t border-revLine/50 flex justify-between items-center text-[10px] font-sans tracking-[0.2em] text-revMuted uppercase z-50 bg-black/10 backdrop-blur-sm">
+    <footer class="fixed bottom-0 w-full px-12 py-5 border-t border-revLine/50 flex justify-between items-center text-[10px] font-sans tracking-[0.2em] text-revMuted uppercase z-50 bg-black/10 backdrop-blur-sm pointer-events-none">
         <div class="flex items-center space-x-6">
             <span class="text-revOrange font-bold tracking-[0.3em]">JD PORTFOLIO</span>
             <div class="flex items-center space-x-2">
@@ -141,9 +139,12 @@
                 </div>
 
                 <div class="lg:col-span-5 flex flex-col justify-center pl-8">
-                    <h1 class="text-[5.5rem] leading-[1] font-serif text-white mb-8 text-shadow-custom">
-                        2026 <span class="text-4xl tracking-widest font-sans uppercase text-revText">THE</span><br>
-                        <span class="italic text-revText">LOGIC AGE</span>
+                    <h1 class="font-serif text-white mb-8 text-shadow-custom flex flex-col">
+                        <div class="flex items-baseline space-x-4">
+                            <span class="text-[5.5rem] leading-none">2026</span>
+                            <span class="text-2xl tracking-[0.2em] font-sans uppercase text-revText mb-2">The</span>
+                        </div>
+                        <span class="text-[4.5rem] italic text-revText leading-[0.8] mt-2">LOGIC AGE</span>
                     </h1>
                     
                     <div class="space-y-6 text-revText/90 font-sans text-[13px] leading-[1.8] max-w-md drop-shadow-md">
@@ -177,13 +178,13 @@
         <section class="screen-section px-12">
             <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
                 
-                <div class="lg:col-span-5 flex flex-col">
+                <div class="lg:col-span-5 flex flex-col relative group cursor-pointer">
                     <div class="w-full h-[450px] border border-revLine overflow-hidden relative shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)]">
-                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop" alt="Latest Event" class="w-full h-full object-cover opacity-80">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                        <div class="absolute bottom-8 left-8 right-8">
-                            <h3 class="font-serif text-4xl text-white mb-2 text-shadow-custom">BACKTRACKING<br><span class="italic font-bold text-5xl">RECRUITING</span></h3>
-                            <p class="font-sans text-[11px] text-white tracking-widest mt-2 drop-shadow">Now fill out the form and get a chance!</p>
+                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop" alt="Featured Project" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-10 right-8 text-right">
+                            <h3 class="font-serif text-[2.5rem] leading-[1] text-white mb-2 text-shadow-custom">SYSTEM<br><span class="italic font-bold text-[3.5rem]">ARCHITECTURE</span></h3>
+                            <p class="font-sans text-[11px] text-white tracking-widest mt-3 drop-shadow">Review the latest 1.21 datapack protocols!</p>
                         </div>
                     </div>
                     <div class="flex space-x-3 mt-6 ml-2">
@@ -194,25 +195,25 @@
                 </div>
 
                 <div class="lg:col-span-7 flex flex-col pt-4">
-                    <div class="flex items-end mb-10 pb-4 border-b border-revLine/50">
-                        <h2 class="font-serif text-[5rem] leading-[0.8] text-white mr-10 text-shadow-custom flex items-end">
-                            <span class="text-[7rem] font-bold">L</span>OGS
+                    <div class="flex items-end mb-8 pb-4 border-b border-revLine/50">
+                        <h2 class="font-serif text-[4rem] leading-[0.8] text-white mr-10 text-shadow-custom flex items-end">
+                            <span class="text-[6rem] font-bold">L</span>OGS
                         </h2>
-                        <div class="tab-pill flex space-x-6 text-[11px] font-sans tracking-[0.2em] text-revText bg-black/20 backdrop-blur-sm" id="filter-tabs">
-                            <span class="cursor-pointer text-revOrange transition-colors" data-cat="LATEST">LATEST</span>
-                            <span class="cursor-pointer hover:text-revOrange transition-colors" data-cat="DEVELOPMENT">NOTICE</span>
-                            <span class="cursor-pointer hover:text-revOrange transition-colors" data-cat="ARTWORK">EVENTS</span>
-                            <span class="cursor-pointer hover:text-revOrange transition-colors" data-cat="LATEST">NEWS</span>
+                        <div class="flex space-x-2 text-[11px] font-sans tracking-[0.1em] text-revMuted border border-revLine rounded-full px-2 py-1.5 bg-black/20 backdrop-blur-sm mb-2" id="filter-tabs">
+                            <span class="cursor-pointer text-revOrange transition-colors px-4 py-1 rounded-full bg-white/5" data-cat="LATEST">LATEST</span>
+                            <span class="cursor-pointer hover:text-revOrange transition-colors px-4 py-1 rounded-full" data-cat="DEVELOPMENT">DEVELOPMENT</span>
+                            <span class="cursor-pointer hover:text-revOrange transition-colors px-4 py-1 rounded-full" data-cat="ARTWORK">ARTWORK</span>
+                            <span class="cursor-pointer hover:text-revOrange transition-colors px-4 py-1 rounded-full" data-cat="NOTES">NOTES</span>
                         </div>
                     </div>
 
-                    <div id="records-container" class="can-scroll space-y-0 max-h-[40vh] overflow-y-auto hide-scroll text-shadow-custom">
+                    <div id="records-container" class="can-scroll space-y-0 max-h-[40vh] overflow-y-auto hide-scroll text-shadow-custom px-2">
                         <div class="py-10 text-revOrange font-mono text-xs tracking-widest animate-pulse">[ FETCHING SECURE LOGS... ]</div>
                     </div>
                     
-                    <div class="pt-8">
-                        <button id="btn-more-records" class="hidden border border-revLine rounded-full px-10 py-2.5 text-[11px] font-sans tracking-[0.2em] text-white hover:border-revOrange hover:text-revOrange transition-colors bg-black/40 backdrop-blur-sm">
-                            MORE <span class="ml-2">→</span>
+                    <div class="pt-6">
+                        <button id="btn-more-records" class="hidden border border-revLine rounded-full px-10 py-2.5 text-[12px] font-sans tracking-[0.2em] text-white hover:border-revOrange transition-colors bg-black/20 backdrop-blur-sm shadow-lg">
+                            More <span class="font-serif italic text-revOrange ml-2 text-lg leading-none">&gt;</span>
                         </button>
                     </div>
                 </div>
@@ -220,22 +221,22 @@
         </section>
 
         <section class="screen-section relative max-w-[1600px] mx-auto px-10">
-            <div class="absolute top-[30%] left-[45%] text-[8px] font-sans tracking-[0.3em] uppercase text-revMuted text-right leading-relaxed opacity-60">
-                <p>WATER SPRANG</p>
-                <p>FROM THE GROUND FOR</p>
-                <p>NO DETECTABLE REASONS.</p>
+            <div class="absolute top-[30%] left-[45%] text-[8px] font-sans tracking-[0.3em] uppercase text-revMuted text-right leading-relaxed opacity-60 drop-shadow-md">
+                <p>MERGING THE ARTISTIC VISION</p>
+                <p>WITH UNCOMPROMISING BACKEND LOGIC.</p>
+                <p>NO DETECTABLE ERRORS.</p>
             </div>
-            <div class="absolute bottom-[35%] right-[15%] text-[8px] font-sans tracking-[0.3em] uppercase text-revMuted leading-relaxed opacity-60 max-w-[200px]">
-                <p>YOU REACHED OUT TO GRAB AND FELT THE RISING ILLUSIONS. THIS IS A STORM RAINING UPWARDS INTO THE SKY.</p>
+            <div class="absolute bottom-[35%] right-[15%] text-[8px] font-sans tracking-[0.3em] uppercase text-revMuted leading-relaxed opacity-60 max-w-[200px] drop-shadow-md">
+                <p>YOU REACHED OUT TO GRAB AND FELT THE RISING SYSTEMS. THIS IS A FRAMEWORK RAINING UPWARDS INTO THE CLOUD.</p>
             </div>
 
             <div class="absolute top-[15%] left-[18%] group cursor-pointer animate-float z-20">
                 <div class="relative">
                     <div class="floating-circle w-[320px] h-[320px] overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=800&auto=format&fit=crop" alt="Illustration" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
                     </div>
-                    <div class="absolute -bottom-4 right-4 w-24 h-16 bg-black border border-revLine rotate-12 shadow-xl z-30"></div>
+                    <div class="absolute -bottom-4 right-4 w-24 h-16 bg-black border border-revLine rotate-12 shadow-xl z-30 flex items-center justify-center text-[8px] font-mono text-revOrange">ASSET_01</div>
                 </div>
                 <h3 class="absolute -bottom-8 left-1/2 -translate-x-1/2 font-serif text-[4rem] text-white font-bold text-shadow-custom z-40 whitespace-nowrap">
                     <span class="text-revOrange text-3xl align-middle mr-2">+</span>ILLUSTRATIONS
@@ -247,16 +248,19 @@
                     <div class="w-[380px] h-[220px] bg-black border border-revLine overflow-hidden shadow-2xl relative">
                         <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="Scripting" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700 filter grayscale">
                     </div>
-                    <div class="absolute -right-12 top-10 w-20 h-24 bg-white/10 border border-revLine rotate-6 backdrop-blur-md shadow-lg"></div>
+                    <div class="absolute -right-6 top-12 w-20 h-24 bg-black border border-revLine rotate-[15deg] shadow-lg flex items-center justify-center overflow-hidden z-20">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=200&auto=format&fit=crop" class="opacity-50">
+                    </div>
+                    <div class="absolute -right-12 top-10 w-20 h-24 bg-black border border-revLine rotate-6 shadow-lg z-10"></div>
                 </div>
                 <h3 class="absolute -bottom-10 -left-16 font-serif text-[4rem] text-white font-bold text-shadow-custom z-40 whitespace-nowrap">
                     <span class="text-revOrange text-3xl align-middle mr-2">+</span>ARCHITECTURE
                 </h3>
             </div>
 
-            <div class="absolute bottom-[10%] left-[45%] -translate-x-1/2 group cursor-pointer animate-float z-30">
+            <div class="absolute bottom-[12%] left-[45%] -translate-x-1/2 group cursor-pointer animate-float z-30">
                 <div class="relative">
-                    <div class="w-[280px] h-[280px] border border-revLine overflow-hidden shadow-2xl relative">
+                    <div class="w-[280px] h-[280px] border border-revLine overflow-hidden shadow-2xl relative bg-black">
                         <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=800&auto=format&fit=crop" alt="Game Dev" class="w-full h-full object-cover opacity-70">
                     </div>
                     <div class="absolute top-1/2 -translate-y-1/2 -right-[120px] w-[240px] h-[240px] rounded-full border border-revLine/30 bg-black/90 shadow-[0_0_30px_rgba(0,0,0,0.9)] flex items-center justify-center group-hover:rotate-180 transition-transform duration-[1.5s] z-[-1]">
@@ -336,16 +340,17 @@
             else if (e.deltaY < -40) gotoSection(currentSection - 1, -1);
         }, { passive: false });
 
-        // 3. Dynamic Data Engine for the List (Matches Screenshot 4 layout)
+        // 3. Dynamic Data Engine for the List (Matches Screenshot exact layout)
         const DB_URL = "https://raw.githubusercontent.com/Calyndrae/calyndrae.github.io/main/records/records.txt";
         let allRecords = [];
+        let currentCategory = 'LATEST';
         let currentLimit = 4; // Show 4 by default
 
         const FALLBACK_DATA = `
 ** Tier 4 Achieved — Preparing for Tier 2/3 **\nCategory: LATEST\nDate: 2026-03-01\nLink: posts.html
-** [Announcement of Results] Ver 3.1 Fanwork Winners **\nCategory: LATEST\nDate: 2026-02-05\nLink: projects.html
+** [Announcement of Results] Ver 3.1 Fanwork Winners **\nCategory: DEVELOPMENT\nDate: 2026-02-05\nLink: projects.html
 ** 3.2 [A Flowing Feast] Version Update Notice **\nCategory: LATEST\nDate: 2026-01-18\nLink: projects.html
-** Mystery Box Carnival Fan Creations Event live! **\nCategory: LATEST\nDate: 2026-01-17\nLink: projects.html
+** Mystery Box Carnival Fan Creations Event live! **\nCategory: ARTWORK\nDate: 2026-01-17\nLink: projects.html
 ** 3.2 Devs Special **\nCategory: LATEST\nDate: 2026-01-10\nLink: projects.html
         `;
 
@@ -368,26 +373,57 @@
                 const link = (body.match(/Link:\s*(.*)/i) || ["",""])[1].trim() || "#";
                 allRecords.push({ title, cat, date, link });
             }
+            bindTabs();
             renderRecords();
         }
 
         function renderRecords() {
             const container = document.getElementById('records-container');
             const btn = document.getElementById('btn-more-records');
-            const toShow = allRecords.slice(0, currentLimit);
+            
+            let filtered = currentCategory === 'LATEST' ? allRecords : allRecords.filter(r => r.cat === currentCategory);
+            const toShow = filtered.slice(0, currentLimit);
+
+            if(filtered.length === 0) {
+                container.innerHTML = `<div class="py-10 text-white text-sm italic">No logs found in this sector.</div>`;
+                btn.style.display = 'none'; return;
+            }
 
             container.innerHTML = toShow.map((r) => `
-                <a href="${r.link}" class="group flex items-center justify-between py-5 border-b border-revLine hover:bg-white/[0.03] transition-colors cursor-pointer pr-4">
-                    <div class="flex items-center space-x-4">
-                        <span class="font-serif text-[13px] text-revOrange tracking-wider">${r.cat}</span>
-                        <h4 class="font-serif text-[17px] text-white group-hover:text-revText transition-colors">${r.title}</h4>
+                <a href="${r.link}" class="group flex items-center justify-between py-4 border-b border-revLine/40 hover:bg-white/[0.03] transition-colors cursor-pointer">
+                    <div class="flex items-baseline space-x-4 overflow-hidden pr-4">
+                        <span class="font-serif text-[15px] text-revOrange tracking-wider shrink-0">${r.cat}</span>
+                        <h4 class="font-serif text-[16px] text-revText group-hover:text-white transition-colors truncate">${r.title}</h4>
                     </div>
-                    <span class="text-[11px] font-sans text-revMuted shrink-0">${r.date}</span>
+                    <span class="text-[11px] font-sans text-revMuted shrink-0 ml-4">${r.date}</span>
                 </a>
             `).join('');
 
-            btn.style.display = allRecords.length > 4 ? 'inline-block' : 'none';
-            btn.onclick = () => { currentLimit += 4; renderRecords(); };
+            if (filtered.length <= 4) {
+                btn.style.display = 'none';
+            } else {
+                btn.style.display = 'inline-block';
+                if (currentLimit >= filtered.length) {
+                    btn.innerHTML = `Collapse <span class="font-serif italic text-revOrange ml-2 text-lg leading-none">&gt;</span>`;
+                    btn.onclick = () => { currentLimit = 4; renderRecords(); container.scrollTop = 0; };
+                } else {
+                    btn.innerHTML = `More <span class="font-serif italic text-revOrange ml-2 text-lg leading-none">&gt;</span>`;
+                    btn.onclick = () => { currentLimit += 4; renderRecords(); };
+                }
+            }
+        }
+
+        function bindTabs() {
+            const tabs = document.querySelectorAll('#filter-tabs span');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    tabs.forEach(t => t.className = "cursor-pointer hover:text-revOrange transition-colors px-4 py-1 rounded-full");
+                    e.target.className = "cursor-pointer text-revOrange transition-colors px-4 py-1 rounded-full bg-white/5";
+                    currentCategory = e.target.getAttribute('data-cat');
+                    currentLimit = 4;
+                    renderRecords();
+                });
+            });
         }
 
         initDynamicRecords();
