@@ -39,12 +39,8 @@
             user-select: none;
         }
 
-        .bg-noise { position: fixed; inset: 0; z-index: 50; opacity: 0.035; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+        .bg-noise { position: fixed; inset: 0; opacity: 0.035; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
         
-        .glow-blob { position: fixed; border-radius: 50%; filter: blur(150px); z-index: -2; opacity: 0.4; }
-        .glow-orange { top: 20%; right: -10%; width: 600px; height: 600px; background: rgba(211, 107, 50, 0.2); }
-        .glow-white { bottom: -10%; left: -10%; width: 500px; height: 500px; background: rgba(223, 220, 213, 0.1); }
-
         .image-bracket-container { position: relative; display: inline-block; }
         .image-bracket-container::before { content: ''; position: absolute; top: -10px; left: -10px; width: 40px; height: 40px; border-top: 1px solid var(--revText); border-left: 1px solid var(--revText); opacity: 0.5; z-index: 10; }
         .image-bracket-container::after { content: ''; position: absolute; bottom: -10px; right: -10px; width: 40px; height: 40px; border-bottom: 1px solid var(--revText); border-right: 1px solid var(--revText); opacity: 0.5; z-index: 10; }
@@ -61,7 +57,8 @@
 
         .screen-section { opacity: 0; visibility: hidden; position: absolute; inset: 0; width: 100%; height: 100%; display: flex; flex-direction: column; }
         
-        #dynamic-grid {
+        /* 动态背景过渡 */
+        #dynamic-bg {
             transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform;
         }
@@ -71,13 +68,17 @@
 </head>
 <body>
 
-    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-revBg">
-        <div id="dynamic-grid" class="absolute inset-[-5%] bg-cover bg-center bg-no-repeat opacity-100" 
-             style="background-image: url('https://raw.githubusercontent.com/Calyndrae/calyndrae.github.io/main/resources/background.png');">
+    <div class="fixed inset-0 z-[-10] overflow-hidden pointer-events-none bg-revBg">
+        
+        <div id="dynamic-bg" class="absolute inset-[-5%] w-[110%] h-[110%]">
+            <img src="./resources/background.png" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop'; console.error('本地图片路径错误，正在使用备用背景');" 
+                 alt="Background" 
+                 class="w-full h-full object-cover opacity-100">
         </div>
         
-        <div class="absolute inset-0 bg-black/70"></div>
-        <div class="bg-noise absolute inset-0 opacity-[0.04]"></div>
+        <div class="absolute inset-0 bg-black/60 z-10"></div>
+        <div class="bg-noise absolute inset-0 z-20"></div>
     </div>
 
     <nav class="fixed top-0 w-full z-50 px-10 py-6 flex justify-between items-center backdrop-blur-sm bg-revBg/70 border-b border-revLine">
@@ -110,7 +111,7 @@
                             <div class="absolute inset-0 bg-revOrange/10 mix-blend-overlay z-10 group-hover:bg-transparent transition-all duration-700"></div>
                             <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=crop" alt="Featured Illustration" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
                             <div class="absolute bottom-6 right-6 text-revOrange opacity-70">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                             </div>
                         </div>
                     </div>
@@ -214,7 +215,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         // ==========================================
-        // 1. 安全锁定 & 视差背景引擎
+        // 1. 安全锁定 & 图片背景视差
         // ==========================================
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('dragstart', event => event.preventDefault());
@@ -225,15 +226,15 @@
         });
 
         document.addEventListener('mousemove', (e) => {
-            const grid = document.getElementById('dynamic-grid');
-            if (!grid) return;
+            const bg = document.getElementById('dynamic-bg');
+            if (!bg) return;
             const xOffset = (e.clientX / window.innerWidth - 0.5);
             const yOffset = (e.clientY / window.innerHeight - 0.5);
-            grid.style.transform = `translate3d(${xOffset * 30}px, ${yOffset * 30}px, 0)`;
+            bg.style.transform = `translate3d(${xOffset * 30}px, ${yOffset * 30}px, 0)`;
         });
 
         // ==========================================
-        // 2. 更快更干脆的全屏滑动引擎
+        // 2. 更快更干脆的全屏滑动引擎 (0.45s)
         // ==========================================
         const sections = document.querySelectorAll('.screen-section');
         const navDots = document.querySelectorAll('.nav-dot');
@@ -265,7 +266,6 @@
             const yExit = direction === 1 ? -100 : 100;
             const yEnter = direction === 1 ? 100 : -100;
 
-            // 速度极快，干净利落 (0.45s)
             gsap.to(current, {
                 y: yExit, autoAlpha: 0, duration: 0.45, ease: "power4.inOut"
             });
