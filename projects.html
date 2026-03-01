@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目 | 我的主页</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { dark: '#000000', light: '#f5f5f7', grayCustom: '#86868b' } } } }
+    </script>
+    <style>
+        body { background-color: #000000; color: #f5f5f7; overflow-x: hidden; }
+        ::-webkit-scrollbar { display: none; }
+        .glass-dock { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+        .card-glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease; }
+        .card-glass:hover { transform: translateY(-8px) scale(1.01); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.15); }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <main class="page-content flex-grow px-6 md:px-24 py-20 pb-40">
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-16 gs-reveal">精选代码。</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div class="card-glass rounded-[2rem] p-10 h-96 flex flex-col justify-end gs-reveal relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0"></div>
+                <div class="relative z-10">
+                    <p class="text-sm font-semibold text-grayCustom tracking-widest uppercase mb-2">Game Logic & JSON</p>
+                    <h3 class="text-3xl font-bold mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-grayCustom transition-all">Minecraft 1.21 核心框架</h3>
+                    <p class="text-grayCustom line-clamp-2">基于 1.21 组件语法与计分板构建的高效数据包，实现解耦的 EPVP 与 PVPP 游戏模式及自动化清理逻辑。</p>
+                </div>
+            </div>
+            <div class="card-glass rounded-[2rem] p-10 h-96 flex flex-col justify-end gs-reveal relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0"></div>
+                <div class="relative z-10">
+                    <p class="text-sm font-semibold text-grayCustom tracking-widest uppercase mb-2">Cybersecurity</p>
+                    <h3 class="text-3xl font-bold mb-3">企业级渗透防御演练</h3>
+                    <p class="text-grayCustom line-clamp-2">模拟高阶网络攻击环境，通过分析系统漏洞与编写持续驻留脚本，角逐顶尖安全竞赛。</p>
+                </div>
+            </div>
+            <div class="card-glass rounded-[2rem] p-10 h-96 flex flex-col justify-end gs-reveal md:col-span-2 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0"></div>
+                <div class="relative z-10">
+                    <p class="text-sm font-semibold text-grayCustom tracking-widest uppercase mb-2">DevOps & Scripting</p>
+                    <h3 class="text-3xl font-bold mb-3">PM2 服务自动化部署</h3>
+                    <p class="text-grayCustom">在 Windows 环境下管理 Python 与 Node 服务，优化 DeepSeekBot 守护进程，保障 24/7 高可用性。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 glass-dock rounded-full px-6 py-4 flex items-center space-x-8 shadow-2xl transition-all">
+        <a href="index.html" class="dock-link group relative text-grayCustom hover:text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1">
+            <span class="text-sm font-medium">Home</span>
+            <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+        </a>
+        <a href="about.html" class="dock-link group relative text-grayCustom hover:text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1">
+            <span class="text-sm font-medium">About</span>
+            <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+        </a>
+        <a href="projects.html" class="dock-link group relative text-white scale-110 transition-all duration-300">
+            <span class="text-sm font-medium">Projects</span>
+            <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></span>
+        </a>
+        <a href="posts.html" class="dock-link group relative text-grayCustom hover:text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1">
+            <span class="text-sm font-medium">Posts</span>
+            <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+        </a>
+        <a href="contact.html" class="dock-link group relative text-grayCustom hover:text-white transition-all duration-
