@@ -31,16 +31,13 @@
         }
     </script>
     <style>
-        /* 修复关键：移除了 body 的 background-color，让背景图能透出来 */
         body, html { 
-            color: #dfdcd5; 
+            background-color: #0e0d0b; color: #dfdcd5; 
             overflow: hidden; height: 100vh; width: 100vw;
             -webkit-font-smoothing: antialiased; 
             user-select: none;
         }
 
-        .bg-noise { position: fixed; inset: 0; opacity: 0.035; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
-        
         .image-bracket-container { position: relative; display: inline-block; }
         .image-bracket-container::before { content: ''; position: absolute; top: -10px; left: -10px; width: 40px; height: 40px; border-top: 1px solid var(--revText); border-left: 1px solid var(--revText); opacity: 0.5; z-index: 10; }
         .image-bracket-container::after { content: ''; position: absolute; bottom: -10px; right: -10px; width: 40px; height: 40px; border-bottom: 1px solid var(--revText); border-right: 1px solid var(--revText); opacity: 0.5; z-index: 10; }
@@ -67,19 +64,18 @@
 </head>
 <body>
 
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-revBg">
-        
+    <div class="fixed inset-0 z-[-10] overflow-hidden pointer-events-none bg-revBg">
         <div id="dynamic-bg" class="absolute inset-[-5%] w-[110%] h-[110%]">
-            <img src="resources/background.png" alt="Background" class="w-full h-full object-cover">
+            <img src="./resources/background.png" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop'; console.error('本地图片路径错误，正在使用备用背景');" 
+                 alt="Background" 
+                 class="w-full h-full object-cover opacity-100">
         </div>
-        
-        <div class="absolute inset-0 bg-black/60 z-10"></div>
-        <div class="bg-noise absolute inset-0 z-20"></div>
-    </div>
+        </div>
 
-    <nav class="fixed top-0 w-full z-50 px-10 py-6 flex justify-between items-center backdrop-blur-sm bg-revBg/70 border-b border-revLine">
+    <nav class="fixed top-0 w-full z-50 px-10 py-6 flex justify-between items-center backdrop-blur-sm bg-revBg/40 border-b border-revLine">
         <div class="flex items-center space-x-12">
-            <a href="index.html" class="text-3xl font-serif tracking-widest text-revText flex items-center">
+            <a href="index.html" class="text-3xl font-serif tracking-widest text-revText flex items-center drop-shadow-md">
                 JD<span class="text-revOrange ml-1 text-4xl">.</span>
             </a>
             <div class="hidden lg:flex space-x-10 text-xs font-sans tracking-[0.2em] text-revMuted">
@@ -97,7 +93,7 @@
         </div>
     </nav>
 
-    <main id="fullpage-wrapper" class="relative w-full h-full pt-28 pb-10 z-10">
+    <main id="fullpage-wrapper" class="relative w-full h-full pt-28 pb-10">
 
         <section class="screen-section justify-center max-w-[1600px] mx-auto px-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center w-full">
@@ -117,12 +113,12 @@
                     <div class="absolute -top-20 -left-10 text-9xl font-serif text-white opacity-[0.02] pointer-events-none">01</div>
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="w-8 h-px bg-revOrange"></div>
-                        <span class="text-revOrange font-sans text-xs tracking-[0.3em] uppercase">Multi-Disciplinary Creator</span>
+                        <span class="text-revOrange font-sans text-xs tracking-[0.3em] uppercase drop-shadow-md">Multi-Disciplinary Creator</span>
                     </div>
-                    <h1 class="text-5xl md:text-7xl font-serif text-revText mb-8 leading-[1.1]">
+                    <h1 class="text-5xl md:text-7xl font-serif text-revText mb-8 leading-[1.1] drop-shadow-lg">
                         Visuals &<br>Underlying<br><span class="italic text-revMuted">Logic.</span>
                     </h1>
-                    <div class="space-y-6 text-revMuted font-sans text-sm leading-relaxed max-w-md pl-4 border-l border-revLine">
+                    <div class="space-y-6 text-revMuted font-sans text-sm leading-relaxed max-w-md pl-4 border-l border-revLine drop-shadow-md">
                         <p>I am a creator bridging the gap between artistic expression and technical execution. With 5 years of experience focused on game illustrations, anime, and UI design.</p>
                         <p>Simultaneously, I am a full-stack scripter and game developer, engineering complex datapacks and commanding Tier 4 PVP combat.</p>
                     </div>
@@ -146,20 +142,20 @@
 
                 <div class="lg:col-span-7 flex flex-col justify-center max-h-[80vh]">
                     <div class="flex items-end mb-8 border-b border-revLine pb-4 relative">
-                        <h2 class="font-serif text-5xl text-revText mr-8">Updates</h2>
-                        <div class="flex space-x-6 text-xs font-sans tracking-[0.2em] text-revMuted pb-2" id="filter-tabs">
+                        <h2 class="font-serif text-5xl text-revText mr-8 drop-shadow-lg">Updates</h2>
+                        <div class="flex space-x-6 text-xs font-sans tracking-[0.2em] text-revMuted pb-2 drop-shadow-md" id="filter-tabs">
                             <span class="cursor-pointer transition-colors pb-1 text-revOrange border-b border-revOrange" data-cat="LATEST">LATEST</span>
                             <span class="cursor-pointer hover:text-revText transition-colors pb-1" data-cat="DEVELOPMENT">DEVELOPMENT</span>
                             <span class="cursor-pointer hover:text-revText transition-colors pb-1" data-cat="ARTWORK">ARTWORK</span>
                         </div>
                     </div>
 
-                    <div id="records-container" class="can-scroll space-y-0 max-h-[45vh] overflow-y-auto hide-scroll pr-4">
+                    <div id="records-container" class="can-scroll space-y-0 max-h-[45vh] overflow-y-auto hide-scroll pr-4 bg-black/20 rounded-xl backdrop-blur-sm">
                         <div class="py-10 text-center text-revOrange font-mono text-xs tracking-widest animate-pulse">[ FETCHING SECURE LOGS... ]</div>
                     </div>
                     
                     <div class="pt-6 text-center shrink-0">
-                        <button id="btn-more-records" class="hidden border border-revLine px-8 py-3 text-xs font-sans tracking-[0.2em] text-revText hover:bg-revText hover:text-revBg transition-colors rounded-full uppercase">
+                        <button id="btn-more-records" class="hidden border border-revLine px-8 py-3 text-xs font-sans tracking-[0.2em] text-revText hover:bg-revText hover:text-revBg transition-colors rounded-full uppercase bg-black/40 backdrop-blur-sm">
                             MORE RECORDS
                         </button>
                     </div>
@@ -169,7 +165,7 @@
 
         <section class="screen-section max-w-[1600px] mx-auto px-10 flex flex-col justify-between pt-10 pb-0">
             <div class="flex-grow relative w-full h-full mt-10">
-                <div class="absolute top-20 left-1/2 -translate-x-1/2 text-center pointer-events-none opacity-40 text-[9px] font-sans tracking-[0.3em] uppercase text-revMuted">
+                <div class="absolute top-20 left-1/2 -translate-x-1/2 text-center pointer-events-none opacity-40 text-[9px] font-sans tracking-[0.3em] uppercase text-revMuted drop-shadow-md">
                     <p>Merging the artistic vision</p><p>with uncompromising backend logic.</p>
                 </div>
 
@@ -223,9 +219,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
-        // ==========================================
-        // 1. 安全锁定 & 图片背景视差
-        // ==========================================
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('dragstart', event => event.preventDefault());
         document.addEventListener('keydown', (e) => {
@@ -242,9 +235,6 @@
             bg.style.transform = `translate3d(${xOffset * 30}px, ${yOffset * 30}px, 0)`;
         });
 
-        // ==========================================
-        // 2. 更快更干脆的全屏滑动引擎 (0.45s)
-        // ==========================================
         const sections = document.querySelectorAll('.screen-section');
         const navDots = document.querySelectorAll('.nav-dot');
         let currentSection = 0;
@@ -337,10 +327,6 @@
             });
         });
 
-        // ==========================================
-        // 3. WeChat Modal Logic (需放到最后)
-        // ==========================================
-        // （由于这一页我去掉了第三页的表单，如果你之前把微信弹窗代码也放进来了，需要保留这段。如果不需要请无视，这里我预留了逻辑防错）
         const wTrigger = document.getElementById('wechat-trigger');
         const wModal = document.getElementById('wechat-modal');
         const wClose = document.getElementById('close-wechat');
@@ -355,9 +341,6 @@
             });
         }
 
-        // ==========================================
-        // 4. 动态数据引擎
-        // ==========================================
         const DB_URL = "https://raw.githubusercontent.com/Calyndrae/calyndrae.github.io/main/records/records.txt";
         let allRecords = [];
         let currentCategory = 'LATEST';
