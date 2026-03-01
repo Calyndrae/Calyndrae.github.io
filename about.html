@@ -65,7 +65,7 @@
         .gs-reveal { opacity: 0; visibility: hidden; }
     </style>
 </head>
-<body class="relative min-h-screen flex flex-col">
+<body class="relative min-h-screen flex flex-col select-none">
 
     <div class="glow-blob glow-purple"></div>
     <div class="glow-blob glow-blue"></div>
@@ -266,6 +266,32 @@
                     onComplete: () => { window.location.href = this.href; } 
                 });
             });
+        });
+
+        // ==========================================
+        // 客户端级别环境锁定 (Client-like Lockdown)
+        // ==========================================
+        
+        // 1. 禁用鼠标右键
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. 禁用图片和链接拖拽
+        document.addEventListener('dragstart', event => event.preventDefault());
+
+        // 3. (可选) 禁用常用审查快捷键和复制 (F12, Ctrl+Shift+I, Ctrl+C, Ctrl+U)
+        document.addEventListener('keydown', (e) => {
+            // F12 或 Ctrl+Shift+I (打开开发者工具)
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.metaKey && e.altKey && e.key === 'I')) {
+                e.preventDefault();
+            }
+            // Ctrl+U / Cmd+U (查看源代码)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
+                e.preventDefault();
+            }
+            // Ctrl+C / Cmd+C (复制)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                e.preventDefault();
+            }
         });
     </script>
 </body>
